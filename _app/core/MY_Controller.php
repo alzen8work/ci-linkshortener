@@ -27,6 +27,12 @@ class MY_Controller extends MX_Controller
             $this->load->library('security');
         }
 		include_once(APPPATH.'core/MY_Constant.php');
+		
+		
+		//fix callback form_validation
+		//https://bitbucket.org/wiredesignz/codeigniter-modular-extensions-hmvc
+		$this->form_validation->CI =& $this;
+		
 
 		$this->vars['jscripts']			= array();
 		$this->vars['jsfiles']			= array();
@@ -113,9 +119,6 @@ class MY_Controller extends MX_Controller
 			}				
 		}
 	}
-    
-    
-    
 }
 
 /* End of file MY_Controller.php */
