@@ -20,7 +20,22 @@ class Crud extends MY_Controller {
 	//query that return empty will redirect here
     function custom_404($arr = array()) 
     {	
-		echo 'test custom_404';
+		$data['success'] = false;
+		
+		$data['msg']	 = '';
+		if(!empty($arr['url']))
+			$data['msg']	 = sprintf($this->lang->line('msg[404_desc]'), '<b>'.$arr['url'].'</b>');
+		
+		$this->vars['cssfiles'][]	= base_url('assets/app.css');  
+
+		$data['cssfiles'] 	= $this->vars['cssfiles'];
+		$data['jsfiles'] 	= $this->vars['jsfiles'];
+		$data['jscripts'] 	= $this->vars['jscripts'];
+
+		$this->load->view('header', $data);
+		$this->load->view('nav_login', $data);
+		$this->load->view('404', $data);
+		$this->load->view('footer', $data);
     }
 
 	//generic save doc from <form action=""> of this controller
