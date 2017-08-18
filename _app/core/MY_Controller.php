@@ -57,7 +57,65 @@ class MY_Controller extends MX_Controller
 		$this->data['vars'] 	= $this->vars;
 		$this->data['top_nav']  = $this->top_nav;
 		$this->data['sidebar']  = $this->sidebar;
+		
+		$_SESSION['language'] = 'english';
+        $current_language 	= $this->session->userdata('language'); //'','english', 'chinese_simplified'	        
+		$this->lang->load('custom_text', $current_language); 
+		
+		$this->load->library('migration'); 	// if migration_auto_latest is set to true // will skip below code
+
+        $this->load->model('common_model');
+		$this->common_model->migrate_stable();  // for stable release 	
+
+
+		$this->vars['jsfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js';  
+
+		$this->vars['cssfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css';
+		$this->vars['jsfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js';
+
+		$this->vars['cssfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/AdminLTE.min.css';
+		$this->vars['cssfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/skins/_all-skins.min.css'; 
+		$this->vars['jsfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.js'; 
+
+
+		$this->vars['cssfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css';
+		$this->vars['jsfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js';  
+
+		$this->vars['cssfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css';
+		$this->vars['cssfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.0.10/font-awesome-animation.min.css';
+
+
+		$this->vars['cssfiles'][]	= base_url('assets/app.css');  
+		$this->vars['jsfiles'][]	= base_url('assets/app.js');  
+
+		$this->vars['jscripts'][]	= 'var base_url="'.base_url().'";';
     }
+    
+
+	function get_segment()
+	{		
+		$seg = 1;
+		$segment = array();
+		while ($seg != 0)
+		{							
+			$seg_info 	= '';
+				
+			$segment[] = $seg_info = $this->uri->segment($seg);
+							
+			if($seg_info != ''){
+				//~ echo $seg_info; echo '';
+				$seg++;	
+			}
+			else
+			{	
+				$seg = 0;
+				return $segment;
+			}				
+		}
+	}
+    
+    
+    
 }
 
 /* End of file MY_Controller.php */
