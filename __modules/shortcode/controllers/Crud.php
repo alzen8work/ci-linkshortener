@@ -18,8 +18,25 @@ class Crud extends MY_Controller {
 	//this function will redirect to URL base on the shortcode given to query the DB else go to 404
     public function get_shortcode($shortcode = '') 
     {
+		$seg = $this->get_segment();
+		
+		//get the last segment of the URL
+		foreach ($seg as $seg_key => $seg_val){
+			if(!empty($seg_val) && $seg_val != 'get_shortcode'){
+				$shortcode = $seg_val;        		
+			}
+		}
+		
+		if(!empty($shortcode)){
+			$result =  $this->shortcode_model->get_url($shortcode);
+			// _debug_array($result);	 exit;		
+			if(!empty($result['success'])){
+				redirect($result['url']);			
+			}else{
+				$this->error_404($result);
+			}	
+		}
     	
-		echo 'test get_shortcode';
     }
 
 	//query that return empty will redirect here
@@ -44,13 +61,11 @@ class Crud extends MY_Controller {
 	//generic save doc from <form action=""> of this controller
 	function save_doc()
 	{
-		if(!$_POST) redirect(base_url($this->controller.'/detail'));	
-
+		if(!$_POST) redirect(base_url($this->controller.'/detail'));
 		
-		$data=array(); //data to be sent to the view 
+		$return_val					= array(); 
+		$return_val['success'] 		= false;
 		if(isset($_POST['processtype']['save'])){
-			
-			$return_val['success'] 	= false;
 			
 			$result 		        	= remove_protocols($_POST['urls']['url']);
 			$_POST['urls']['url'] 		= remove_url_last_slash($result['url']);
@@ -74,12 +89,7 @@ class Crud extends MY_Controller {
 				$return_val['msg'] 		= ucwords(lang('msg[generated]'));    		
 				$return_val['url'] 		= base_url(str_replace('=','-', base64_encode($this->db->insert_id())));
 			}
-			
-			// $data = $this->shortcode_model->gen_url();
-		
 		}
-		// _debug_array($data); exit;
-		
 		$this->detail($return_val);
 	}
 

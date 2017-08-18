@@ -9,36 +9,29 @@ class Shortcode_model extends MY_Model {
 	{
 		parent::__construct();
 	}
-
-	function gen_url_bk()
-	{
-			$return_val['success'] 	= false;
-			
-			$result 		        	= remove_protocols($_POST['urls']['url']);
-			$_POST['urls']['url'] 		= remove_url_last_slash($result['url']);
-			$_POST['urls']['protocol'] 	= $result['protocol'];
-			
-			
-			$validation_arr = $this->set_form_validation($this->_table, 1);
-			
-			$this->form_validation->set_error_delimiters('&nbsp;','&nbsp;');
-		
-			if($this->form_validation->run() == false){
-				$return_val['success'] 	= false;
-				$return_val['msg'] 		= validation_errors(); //ucwords(lang('msg[invalid]'));
-			}
-			else
-			{
-				$result 			= remove_protocols($_POST['urls']['url']);
-				$data['url'] 		= remove_url_last_slash($result['url']);
-				$data['protocol'] 	= $result['protocol'];
 	
-				$this->db->insert('urls', $data);
-				$return_val['success'] 	= true;
-				$return_val['msg'] 		= ucwords(lang('msg[generated]'));    		
-				$return_val['url'] 		= base_url(str_replace('=','-', base64_encode($this->db->insert_id())));
-			}
+	
 
-			return $return_val;
+	function get_url($shortcode =''){
+		$return_val['success'] = false; 
+		// print_r($shortcode); exit;
+		$query=$this->db->get_where('urls', array('url_id'=> base64_decode(str_replace('-','=', $shortcode))));
+		$result = $query->result_array();
+
+		if(!empty($result[0]))
+		{
+			$protocol 	= (!empty($result[0]['protocol']))?$result[0]['protocol']:'http://';
+			$url 		= $result[0]['url'];
+			$return_val['url'] 		= $protocol.$url;
+			$return_val['success'] 	= true; 
+
+		}else{
+			// return '/error_404';
+			// $return_val['url'] = '/error_404';
+			$return_val['url'] 		= current_url();//base_url('/error_404');
+			$return_val['success'] = false; 
+		}
+
+		return $return_val;
 	}
 }
