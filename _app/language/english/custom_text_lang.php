@@ -1,5 +1,16 @@
 <?php
 
+
+//db fields
+//urls table
+$lang['txt[url]'] 		        	= 'url';
+$lang['txt[protocol]']              = 'protocol';
+$lang['txt[url_id]'] 		        = 'url_id';
+$lang['txt[alias]'] 		        = 'alias';
+
+//db fields
+
+
 //app default configs
 $lang['app[skin]'] 	            	='skin-1'; //no-skin //skin-1 //skin-2 //skin-3 no-skin
 $lang['app[slogan]']            	='';
@@ -16,7 +27,6 @@ $lang['app[right]']					= ' All rights reserved. ';
 $lang['app[version]']				= ' <b>Version</b> 1.0.0';
 $lang['app[img]']					='https://lovely.ninja/icon.png';
 $lang['app[img_2]']					='https://capitalmedia.co.in/wp-content/uploads/2016/03/analytics-icon.png';
-
 
 //navigation links
 $lang['url[home]'] 					= base_url(); //shorturl detail page
@@ -41,6 +51,9 @@ $lang['msg[generated]']				= 'record generated';
 //404 page
 $lang['msg[404_main]']				= '404 Page Not Found';
 $lang['msg[404_desc]']				= '<p style="line-height:2em"> <i> %s </i> does not exist.</p> <small>If you typed in or copied/pasted this URL, make sure you included all the characters, with no extra punctuation.</small>';
+
+
+$lang['msg[already_exist]']		    = 'this %s is already being used.';
 
 //detail page
 $lang['header[shorten]']			= 'symplify your links';

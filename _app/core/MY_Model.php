@@ -259,7 +259,8 @@ class MY_Model extends CI_Model
 		{	
 			$field_to_check	= $arr['field_to_check'];
 			$field_value	= $this->db->escape_str($_POST[$this->_table][$field_to_check]);
-			$error_msg		= (empty($arr['field_name']))?'no_field':$arr['field_name'];
+			$error_msg		= (empty($arr['field_name']))?'no_field':strtoupper($arr['field_name']);
+			$error_msg		= sprintf($this->lang->line('msg[already_exist]'), '<b>'.$error_msg.'</b>');
 			
 			if($_POST && (!empty($_POST[$this->_table][$field_to_check])))
 			{
@@ -269,7 +270,7 @@ class MY_Model extends CI_Model
 				{
 					$qry_str .= " AND `".$this->_primary_key."` != '".$_POST[$this->_table][$this->_primary_key]."' ";	
 				}
-				$qry_str .= " AND `is_delete` != '1' ";	
+				// $qry_str .= " AND `is_delete` != '1' ";	
 				
 				$query 			= $this->db->query($qry_str);	
 				$result_arr		= $query->result_array();
@@ -278,10 +279,16 @@ class MY_Model extends CI_Model
 			}
 		}
 
+		// if($return_val == false) 
+		// 	$this->form_validation->set_message(
+		// 		$arr['validate_func'], 
+		// 		ucwords(lang('msg[being_used_1]')).$error_msg.ucwords(lang('msg[being_used_2]')));
+		
+	
 		if($return_val == false) 
 			$this->form_validation->set_message(
 				$arr['validate_func'], 
-				ucwords(lang('msg[being_used_1]')).$error_msg.ucwords(lang('msg[being_used_2]')));
+				ucwords($error_msg));
 
 		return $return_val;
 	}
