@@ -9,12 +9,9 @@ class Shortcode_model extends MY_Model {
 	{
 		parent::__construct();
 	}
-	
-	
 
 	function get_url($shortcode =''){
 		$return_val['success'] = false; 
-		// print_r($shortcode); exit;
 		$query=$this->db->get_where('urls', array('url_id'=> base64_decode(str_replace('-','=', $shortcode))));
 		$result = $query->result_array();
 
@@ -26,9 +23,7 @@ class Shortcode_model extends MY_Model {
 			$return_val['success'] 	= true; 
 
 		}else{
-			// return '/error_404';
-			// $return_val['url'] = '/error_404';
-			$return_val['url'] 		= current_url();//base_url('/error_404');
+			$return_val['url'] 		= current_url();
 			$return_val['success'] = false; 
 		}
 
