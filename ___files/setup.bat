@@ -1,0 +1,1 @@
+xcopy *.php ..\_app\config

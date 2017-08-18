@@ -77,9 +77,9 @@ $db['default'] = array(
 	
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => '',
+	'username' => 'root',
 	'password' => '',
-	'database' => '',
+	'database' => 'ls_app',
 
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

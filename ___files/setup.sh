@@ -1,0 +1,1 @@
+scp *.php ../_app/config
