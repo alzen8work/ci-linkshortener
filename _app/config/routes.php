@@ -49,6 +49,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'Welcome';
-$route['404_override'] = '';
+$route['api/(.+)'] 				= 'shortcode/crud/api_request/$1';
+$route['shortcode/(.+)'] 		= 'shortcode/crud/$1';
+
+$route['default_controller'] 	= 'shortcode/crud/index';
+$route['404_override'] 			= 'shortcode/crud/get_shortcode';
+$route['error_404'] 			= 'shortcode/crud/custom_404';
+
 $route['translate_uri_dashes'] = FALSE;
