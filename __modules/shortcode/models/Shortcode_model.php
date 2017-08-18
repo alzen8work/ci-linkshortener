@@ -20,6 +20,7 @@ class Shortcode_model extends MY_Model {
 			$protocol 	= (!empty($result[0]['protocol']))?$result[0]['protocol']:'http://';
 			$url 		= $result[0]['url'];
 			$return_val['url'] 		= $protocol.$url;
+			$return_val['data'] 	= $result[0];
 			$return_val['success'] 	= true; 
 
 		}else{

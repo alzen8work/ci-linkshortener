@@ -49,6 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
+$route['api'] 			    	= 'shortcode/crud/api_request';
 $route['api/(.+)'] 				= 'shortcode/crud/api_request/$1';
 $route['shortcode/(.+)'] 		= 'shortcode/crud/$1';
 

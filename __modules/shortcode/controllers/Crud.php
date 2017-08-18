@@ -12,7 +12,35 @@ class Crud extends MY_Controller {
 		parent::__construct();
 		$this->controller = 'shortcode';
 		$this->load->model('shortcode_model');
+		$this->load->model('clicks_model');
 		$this->_table = 'urls';
+	}
+	
+	public function test2(){
+		echo '<a href="https://demo-alextehkh.c9users.io/u/shortcode/test" >test2</a>'	;
+	}
+	
+	public function test(){
+		$test3 = (empty($_SERVER['HTTP_USER_AGENT']))?'no HTTP_USER_AGENT':$_SERVER['HTTP_USER_AGENT'];
+		
+		_debug_array($test3);
+		
+		$test2 = (empty($_SERVER['HTTP_REFERER']))?'no HTTP_REFERER':$_SERVER['HTTP_REFERER'];
+		
+		_debug_array($test2);
+		
+		
+		$test = ip_info();
+		_debug_array($test);
+		
+		$test0 =  user_ip();
+		_debug_array($test0);
+		
+		
+		// echo $_SERVER['HTTP_USER_AGENT'] . "\n\n";
+
+		// $browser = get_browser(null, true);
+		// print_r($browser);
 	}
 	
 	//this function will redirect to URL base on the shortcode given to query the DB else go to 404
@@ -29,11 +57,24 @@ class Crud extends MY_Controller {
 		
 		if(!empty($shortcode)){
 			$result =  $this->shortcode_model->get_url($shortcode);
-			// _debug_array($result);	 exit;		
-			if(!empty($result['success'])){
-				redirect($result['url']);			
+			$saved	= '';	
+			// _debug_array($result);	 exit;	
+			if(!empty($result['success']))
+			{
+				// _debug_array($result);	
+				if(!empty($result['data']['url_id']))
+				{
+					$data['urls_id'] = $result['data']['url_id'];
+					$data['ip'] 	=  user_ip();
+					$saved = $this->clicks_model->add($data);
+				}
+			}
+			
+			if(!empty($saved)){
+				
+				redirect($result['url']);		
 			}else{
-				$this->error_404($result);
+				$this->custom_404($result);
 			}	
 		}
     	
@@ -123,9 +164,43 @@ class Crud extends MY_Controller {
     }
 
 	//a request to return statistic of a given shortcode
-    function api_request()
+    public function api_request($shortcode = '') 
     {
-    	echo 'test api_request'; exit;
+		$seg = $this->get_segment();
+		
+		//get the last segment of the URL
+		foreach ($seg as $seg_key => $seg_val){
+			if(!empty($seg_val) && $seg_val != 'api' && $seg_val != 'api_request'){
+				$shortcode = $seg_val;        		
+			}
+		}
+		
+		if(empty($shortcode)){
+			echo 'no data';
+		}else{
+			// echo $shortcode;
+			$result =  $this->shortcode_model->get_url($shortcode);
+			// _debug_array($result);
+			if(!empty($result['data']['url_id'])){
+				
+				$result['data']['short_url'] = base_url($shortcode);
+				
+				$json = $this->clicks_model->gen_data($result);
+				
+				// _debug_array($json); exit;
+				
+				
+				// $this->db->from('clicks');
+				// $this->db->where('urls_id', $result['data']['url_id']);
+				// $saved = $this->db->count_all_results();
+				// _debug_array($saved);
+				
+				
+				$this->output->set_header("Pragma: no-cache");
+				$this->output->set_header("Cache-Control: no-store, no-cache");
+				$this->output->set_content_type('application/json')->set_output(json_encode($json));	
+			}
+		}
     }
     
 	

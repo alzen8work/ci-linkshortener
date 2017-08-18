@@ -15,4 +15,6 @@ Class Common_model extends MY_Model {
 			exit;
 		}
 	}
+	
+
 }
