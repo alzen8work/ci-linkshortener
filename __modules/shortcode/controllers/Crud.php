@@ -8,6 +8,7 @@ class Crud extends MY_Controller {
 	function __construct()
 	{
 		parent::__construct();
+		$this->controller = 'shortcode';
 	}
 	
 	//this function will redirect to URL base on the shortcode given to query the DB else go to 404
@@ -26,8 +27,6 @@ class Crud extends MY_Controller {
 		if(!empty($arr['url']))
 			$data['msg']	 = sprintf($this->lang->line('msg[404_desc]'), '<b>'.$arr['url'].'</b>');
 		
-		$this->vars['cssfiles'][]	= base_url('assets/app.css');  
-
 		$data['cssfiles'] 	= $this->vars['cssfiles'];
 		$data['jsfiles'] 	= $this->vars['jsfiles'];
 		$data['jscripts'] 	= $this->vars['jscripts'];
@@ -42,18 +41,38 @@ class Crud extends MY_Controller {
 	function save_doc()
 	{
 		echo 'test save_doc';
+		if($_POST){
+			_debug_array($_POST); exit;
+		}
 	}
 
 	//form of detail page
 	public function detail($data=array())
 	{
-		echo 'test detail';
+		$this->vars['jscripts'][]	= 'var controller="'.$this->controller.'";';
+		$this->vars['jscripts'][]	= 'var swal_title="'.ucwords(lang('btn[your_shorten_url]')).'";';
+		$this->vars['jscripts'][]	= 'var copy_url="'.ucwords(lang('btn[copy_url]')).'";';
+		$this->vars['jscripts'][]	= 'var btn_done="'.ucwords(lang('btn[done]')).'";';
+
+		if(!empty($data['msg'])) $this->vars['jscripts'][]	= 'var msg="'.$data['msg'].'";';
+		if(empty($data['url'])) $this->vars['jscripts'][]	= 'var shortcode="";';
+		else $this->vars['jscripts'][]						= 'var shortcode="'.$data['url'].'";';
+		
+		$data['cssfiles'] 	= $this->vars['cssfiles'];
+		$data['jsfiles'] 	= $this->vars['jsfiles'];
+		$data['jscripts'] 	= $this->vars['jscripts'];
+		$data['form_action'] = base_url($this->controller.'/save_doc');
+
+		$this->load->view('header', $data);
+		$this->load->view('nav_login', $data);
+		$this->load->view('detail', $data); //load the single view get_url and send any data to it
+		$this->load->view('footer', $data);
 	}
 
 	//listing page	
 	public function index()
 	{
-		echo 'test index';
+		$this->detail();
     }
 
 	//a request to return statistic of a given shortcode

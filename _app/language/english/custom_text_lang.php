@@ -11,7 +11,7 @@ $lang['app[owner_name]']			= ' Alexander Teh ';
 $lang['app[owner_title]']			= ' Fullstack Web Developer ';
 $lang['app[owner_comp]']			= ' Alzen8work ';
 $lang['app[copy]']					=' Copyright © 2014 -'.date("Y");
-$lang['app[right]']					= $lang['app[owner_comp]'].' All rights reserved. ';
+$lang['app[right]']					= ' All rights reserved. ';
 
 $lang['app[version]']				= ' <b>Version</b> 1.0.0';
 $lang['app[img]']					='https://lovely.ninja/icon.png';
@@ -31,7 +31,6 @@ $lang['btn[home]']					= 'home';
 $lang['btn[login]']					= 'sign in';
 $lang['btn[register]']				= 'sign up';
 
-
 //standard notified msg
 $lang['msg[invalid]']				= 'invalid submission';
 $lang['msg[saved]']					= 'record saved';
@@ -42,3 +41,6 @@ $lang['msg[generated]']				= 'record generated';
 //404 page
 $lang['msg[404_main]']				= '404 Page Not Found';
 $lang['msg[404_desc]']				= '<p style="line-height:2em"> <i> %s </i> does not exist.</p> <small>If you typed in or copied/pasted this URL, make sure you included all the characters, with no extra punctuation.</small>';
+
+//detail page
+$lang['header[shorten]']			= 'symplify your links';

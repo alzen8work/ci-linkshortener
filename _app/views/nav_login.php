@@ -77,7 +77,6 @@
 </header>
 <div id="modal_login" class="modal fade" role="dialog">
 	<div class="modal-dialog modal-md">
-
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
@@ -132,27 +131,23 @@
 			</div>
 			<div class="modal-body">
 				<div class="login-box-body">
-					<!-- <p class="login-box-msg">Sign in</p> -->
-
-					<form action="index.php" method="post">
-						<div class="form-group has-feedback">
-							<input type="email" name="email" class="form-control" placeholder="Email">
-							<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+					<div class="form-group has-feedback">
+						<input type="email" name="email" class="form-control" placeholder="Email">
+						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+					</div>
+					<div class="form-group has-feedback">
+						<input type="password" name="pw" class="form-control" placeholder="Password">
+						<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+					</div>
+					<div class="row">
+						<div class="col-xs-8">
 						</div>
-						<div class="form-group has-feedback">
-							<input type="password" name="pw" class="form-control" placeholder="Password">
-							<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+						<!-- /.col -->
+						<div class="col-xs-4">
+							<input type="submit" name="su" value="Login" class="btn btn-primary btn-block btn-flat">
 						</div>
-						<div class="row">
-							<div class="col-xs-8">
-							</div>
-							<!-- /.col -->
-							<div class="col-xs-4">
-								<input type="submit" name="su" value="Login" class="btn btn-primary btn-block btn-flat">
-							</div>
-							<!-- /.col -->
-						</div>
-					</form>
+						<!-- /.col -->
+					</div>
 				</div>
 			</div>
 			<div class="modal-footer hide">
