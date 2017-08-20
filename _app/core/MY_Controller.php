@@ -90,7 +90,9 @@ class MY_Controller extends MX_Controller
 		$this->vars['cssfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css';
 		$this->vars['cssfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.0.10/font-awesome-animation.min.css';
 
-
+		// $this->vars['jsfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js';  
+		$this->vars['jsfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js';  
+		
 		$this->vars['cssfiles'][]	= base_url('assets/app.css');  
 		$this->vars['jsfiles'][]	= base_url('assets/app.js');  
 

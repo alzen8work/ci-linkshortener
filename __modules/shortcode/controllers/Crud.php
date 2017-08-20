@@ -14,33 +14,18 @@ class Crud extends MY_Controller {
 		$this->load->model('shortcode_model');
 		$this->load->model('clicks_model');
 		$this->_table = 'urls';
+		$this->vars['jscripts'][] = 'var controller="'.$this->controller.'";';
 	}
 	
-	public function test2(){
-		echo '<a href="https://demo-alextehkh.c9users.io/u/shortcode/test" >test2</a>'	;
+	public function test_page(){
+		echo '<a target="_blank" href="https://demo-alextehkh.c9users.io/u/1njcjb">generate clicks</a><br>'	;
+		echo '<a target="_blank" href="https://demo-alextehkh.c9users.io/u/api/1njcjb">analytic page</a>'	;
 	}
 	
-	public function test(){
-		$test3 = (empty($_SERVER['HTTP_USER_AGENT']))?'no HTTP_USER_AGENT':$_SERVER['HTTP_USER_AGENT'];
-		
-		_debug_array($test3);
-		
-		$test2 = (empty($_SERVER['HTTP_REFERER']))?'no HTTP_REFERER':$_SERVER['HTTP_REFERER'];
-		
-		_debug_array($test2);
-		
-		
-		$test = ip_info();
-		_debug_array($test);
-		
-		$test0 =  user_ip();
-		_debug_array($test0);
-		
-		
-		// echo $_SERVER['HTTP_USER_AGENT'] . "\n\n";
-
-		// $browser = get_browser(null, true);
-		// print_r($browser);
+	public function test()
+	{
+		echo 'page tested!!!<br>Check the clicks in :<br>';
+		echo '<a target="_blank" href="https://demo-alextehkh.c9users.io/u/api/1njcjb">analytic page</a>';
 	}
 	
 	//this function will redirect to URL base on the shortcode given to query the DB else go to 404
@@ -50,22 +35,38 @@ class Crud extends MY_Controller {
 		
 		//get the last segment of the URL
 		foreach ($seg as $seg_key => $seg_val){
-			if(!empty($seg_val) && $seg_val != 'get_shortcode'){
+			if(!empty($seg_val) && $seg_val != 'get_shortcode') {
 				$shortcode = $seg_val;        		
 			}
 		}
 		
 		if(!empty($shortcode)){
-			$result =  $this->shortcode_model->get_url($shortcode);
+			// $result =  $this->shortcode_model->get_url($shortcode);
+			$result = $this->common_model->get_url($shortcode);
 			$saved	= '';	
+			
+			// _debug_array($shortcode);	 exit;
 			// _debug_array($result);	 exit;	
 			if(!empty($result['success']))
 			{
-				// _debug_array($result);	
+				// _debug_array($result); exit;	
 				if(!empty($result['data']['url_id']))
 				{
-					$data['urls_id'] = $result['data']['url_id'];
-					$data['ip'] 	=  user_ip();
+					$data['urls_id']			= $result['data']['url_id'];
+					$data['ip'] 				= user_ip();
+					$data['referrer'] 			= get_referer_data(); //$this->agent->referrer(); //or helper get_referer_url();
+					$ip_info					= ip_info();
+					$data['country'] 			= strtoupper($ip_info['country_code']);
+					$data['region'] 			= json_encode($ip_info);
+					
+				
+					$data['browser']			= get_browser_data();			////(empty($browser))?'unknown':strtolower($browser); //or get_browser_info(); //
+					$data['browser_version']	= get_browser_version();		//strtolower($this->agent->version());
+					$data['platform'] 			= get_platform_data();		//strtolower($this->agent->platform()); // or helper get_platform();
+					$data['platform_version'] 	= get_platform_data();		//strtolower($this->agent->platform()); // or helper get_platform();
+					$data['agent_string'] 		= $this->agent->agent_string(); //or helper get_agent();
+					
+					
 					$saved = $this->clicks_model->add($data);
 				}
 			}
@@ -74,6 +75,7 @@ class Crud extends MY_Controller {
 				
 				redirect($result['url']);		
 			}else{
+				$result['url'] = base_url($shortcode);
 				$this->custom_404($result);
 			}	
 		}
@@ -89,11 +91,9 @@ class Crud extends MY_Controller {
 		if(!empty($arr['url']))
 			$data['msg']	 = sprintf($this->lang->line('msg[404_desc]'), '<b>'.$arr['url'].'</b>');
 		
-		$data['cssfiles'] 	= $this->vars['cssfiles'];
-		$data['jsfiles'] 	= $this->vars['jsfiles'];
-		$data['jscripts'] 	= $this->vars['jscripts'];
+		$vars = $this->vars;
 
-		$this->load->view('header', $data);
+		$this->load->view('header', $vars);
 		$this->load->view('nav_login', $data);
 		$this->load->view('404', $data);
 		$this->load->view('footer', $data);
@@ -108,9 +108,6 @@ class Crud extends MY_Controller {
 		$return_val['success'] 		= false;
 		if(isset($_POST['processtype']['save'])){
 			
-			$result 		        	= remove_protocols($_POST['urls']['url']);
-			$_POST['urls']['url'] 		= remove_url_last_slash($result['url']);
-			$_POST['urls']['protocol'] 	= $result['protocol'];
 			
 			$validation_arr = $this->_set_form_validation($this->_table, 1);
 			$this->form_validation->set_error_delimiters('&nbsp;','&nbsp;');
@@ -124,11 +121,19 @@ class Crud extends MY_Controller {
 				$result 			= remove_protocols($_POST['urls']['url']);
 				$data['url'] 		= remove_url_last_slash($result['url']);
 				$data['protocol'] 	= $result['protocol'];
-				$this->shortcode_model->add($data);
+				$gen_result = $this->common_model->gen_url($data);
+				// $this->shortcode_model->add($data);
 				
-				$return_val['success'] 	= true;
-				$return_val['msg'] 		= ucwords(lang('msg[generated]'));    		
-				$return_val['url'] 		= base_url(str_replace('=','-', base64_encode($this->db->insert_id())));
+				// _debug_array($gen_result); exit;
+				if(empty($return_val['success'])){
+					$return_val['success'] 	= $gen_result['success'];
+					$return_val['msg'] 		= ucwords(lang('msg[generated]'));    		
+					$return_val['url'] 		= $gen_result['url'];
+				}
+				
+				// $return_val['url'] 		= base_url(str_replace('=','-', base64_encode($this->db->insert_id())));
+				// _debug_array($return_val); exit;
+				
 			}
 		}
 		$this->detail($return_val);
@@ -137,21 +142,24 @@ class Crud extends MY_Controller {
 	//form of detail page
 	public function detail($data=array())
 	{
-		$this->vars['jscripts'][]	= 'var controller="'.$this->controller.'";';
-		$this->vars['jscripts'][]	= 'var swal_title="'.ucwords(lang('btn[your_shorten_url]')).'";';
-		$this->vars['jscripts'][]	= 'var copy_url="'.ucwords(lang('btn[copy_url]')).'";';
-		$this->vars['jscripts'][]	= 'var btn_done="'.ucwords(lang('btn[done]')).'";';
+		$vars = $this->vars;
 
-		if(!empty($data['msg'])) $this->vars['jscripts'][]	= 'var msg="'.$data['msg'].'";';
-		if(empty($data['url'])) $this->vars['jscripts'][]	= 'var shortcode="";';
-		else $this->vars['jscripts'][]						= 'var shortcode="'.$data['url'].'";';
+		if(!empty($data['msg'])) {
+			$vars['jscripts'][]		= 'var msg="'.$data['msg'].'";';
+		}
+			
+		if(empty($data['url'])) {
+			$vars['jscripts'][]		= 'var shortcode="";';
+		} else {
+			$vars['jscripts'][]		= 'var shortcode="'.$data['url'].'";';
+			$vars['jscripts'][]		= 'var swal_title="'.ucwords(lang('btn[your_shorten_url]')).'";';
+			$vars['jscripts'][]		= 'var btn_done="'.ucwords(lang('btn[done]')).'";';
+			$vars['jscripts'][]		= 'var copy_url="blablabla";';
+		}
 		
-		$data['cssfiles'] 	= $this->vars['cssfiles'];
-		$data['jsfiles'] 	= $this->vars['jsfiles'];
-		$data['jscripts'] 	= $this->vars['jscripts'];
 		$data['form_action'] = base_url($this->controller.'/save_doc');
 
-		$this->load->view('header', $data);
+		$this->load->view('header', $vars);
 		$this->load->view('nav_login', $data);
 		$this->load->view('detail', $data); //load the single view get_url and send any data to it
 		$this->load->view('footer', $data);
@@ -166,43 +174,133 @@ class Crud extends MY_Controller {
 	//a request to return statistic of a given shortcode
     public function api_request($shortcode = '') 
     {
-		$seg = $this->get_segment();
+		$json_result['success'] = false; 
+		$seg	= $this->get_segment();
 		
 		//get the last segment of the URL
-		foreach ($seg as $seg_key => $seg_val){
-			if(!empty($seg_val) && $seg_val != 'api' && $seg_val != 'api_request'){
+		foreach ($seg as $seg_key => $seg_val) {
+			if(!empty($seg_val) && $seg_val != 'api' && $seg_val != 'api_request') {
 				$shortcode = $seg_val;        		
 			}
 		}
 		
-		if(empty($shortcode)){
-			echo 'no data';
-		}else{
-			// echo $shortcode;
-			$result =  $this->shortcode_model->get_url($shortcode);
-			// _debug_array($result);
-			if(!empty($result['data']['url_id'])){
+		if(!empty($shortcode)) {
+			$result = $this->common_model->get_url($shortcode);
+			//get from urls
+			// _debug_array($result); exit;
+			if(!empty($result['data']['url_id'])) {
 				
 				$result['data']['short_url'] = base_url($shortcode);
 				
-				$json = $this->clicks_model->gen_data($result);
-				
-				// _debug_array($json); exit;
-				
+				// get from clicks table
+				$json_result = $this->common_model->gen_data($result);
 				
 				// $this->db->from('clicks');
 				// $this->db->where('urls_id', $result['data']['url_id']);
 				// $saved = $this->db->count_all_results();
 				// _debug_array($saved);
-				
-				
-				$this->output->set_header("Pragma: no-cache");
-				$this->output->set_header("Cache-Control: no-store, no-cache");
-				$this->output->set_content_type('application/json')->set_output(json_encode($json));	
 			}
 		}
+		
+		// _debug_array($json_result); exit;
+		
+		$this->output->set_header("Pragma: no-cache");
+		$this->output->set_header("Cache-Control: no-store, no-cache");
+		$this->output->set_content_type('application/json')->set_output(json_encode($json_result));
     }
     
+	//a request to return statistic of a given shortcode
+    public function analytics($got_val=array()) 
+    {
+		if(empty($got_val)){ 
+			// echo 'no data'; exit; /* redirect */ 	
+			redirect(base_url());
+		} 	// _debug_array('$got_val'); _debug_array(!empty($got_val)); _debug_array('------------------------------');
+    	
+		// _debug_array($this->_validate_analytics()); exit;
+    	$result = $this->_validate_analytics();
+    	
+		$vars = $this->vars;
+		
+    	if(empty($result['success'])) {
+    		// echo 'error 404'; exit;
+			$this->custom_404();
+    	}else {
+    		// _debug_array($result['result']);
+			$vars['jscripts'][]	= 'var shortcode="'.$result['result']['alias'].'";';
+			$vars['jscripts'][]	= 'var shortcode_url="'.base_url($result['result']['alias']).'";';
+    		$url_arr			= remove_protocols(base_url($result['result']['alias']));
+			$vars['jscripts'][]	= 'var shortcode_display="'.$url_arr['url'].'";';
+			$vars['jsfiles'][]	= base_url('assets/analytics.js');   
+    	}
+    	
+    	if(!empty($_GET)) {
+    		// _debug_array($_GET);
+    		// _debug_array(isset($_GET['all_time']));
+    		if(isset($_GET['all_time'])) {
+					$vars['jscripts'][] = 'var timeframe = "all_time";';
+    		}
+    	}
+    	
+		
+		$vars['jscripts'][]	= 'var shortcode_display="'.$url_arr['url'].'";';
+		$data['form_action'] = base_url($this->controller.'/save_doc');
+
+		$this->load->view('header', $vars);
+		$this->load->view('nav_login', $data);
+		$this->load->view('dashboard', $data); //load the single view get_url and send any data to it
+		$this->load->view('footer', $data);
+    }
+    
+	function _validate_analytics()
+	{	
+		$return_val['success'] = false; 
+		$seg = $this->get_segment(); // _debug_array('Check Entire Segment'); _debug_array($seg); _debug_array('------------------------------');
+		
+		//get $param of the URL
+    	// _debug_array('$param');
+		foreach ($seg as $seg_key => $seg_val) {
+			if(!empty($seg_val) && $seg_val != 'shortcode' && $seg_val != 'analytics') 
+			$param[] = $seg_val;
+		}
+    	// _debug_array($param);
+    	// _debug_array('------------------------------');
+    	
+		
+    	// _debug_array('$get_base');
+    	$get_base = remove_protocols(remove_url_last_slash(base_url()));
+    	$base_arr = explode("/",$get_base['url']); 
+    	// _debug_array($base_arr); _debug_array('------------------------------');
+    	
+    	
+    	// _debug_array('array_diff exclude base url');
+		$left_over_param = array_diff($param,$base_arr);
+		// _debug_array($left_over_param);
+		// _debug_array('------------------------------');
+		
+    	// _debug_array('$left_over_param count = 1');
+    	//remaining param. counted != 1, 404
+    	
+    	
+    	if(count($left_over_param) == 1) 
+    	{
+    		// echo 'yes, left over param is 1';
+			$left_over_param_val	= array_values($left_over_param)[0];
+    		// _debug_array(array_values($left_over_param)[0]);
+    		$code_exist				= $this->common_model->code_exist($left_over_param_val);
+    		
+    		// _debug_array($code_exist);exit;
+    		if(!empty($code_exist['success']))
+    		{
+	    		$return_val['result']	=$code_exist['result'];
+				$return_val['success']	= true; 
+    		}
+    		
+    	}
+    	
+    	
+		return $return_val;
+	}
 	
     //validation methods
 	function _set_form_validation($mode = 'urls', $auto_set_rules = '1')
@@ -226,5 +324,116 @@ class Crud extends MY_Controller {
 		$arr['field_name']  	= 'url';
 		$arr['validate_func'] 	= '_validate_code_exist';
 		return $this->shortcode_model->validate_field_exist($arr);
+	}
+	
+	
+	
+	// unused
+	public function _user_agent_test()
+	{
+		$this->load->helper('user_agent');
+		echo '<pre>';
+		var_dump(user_agent());
+		_debug_array('-----------------------------------------------------');
+		
+		echo "The time is " . date("h:i:sa");
+		echo "<br>My timezone is UTC+08:00, so the time is <br>" ;
+		$new_time = date("Y-m-d H:i:s", strtotime('+8 hours'));
+		echo $new_time;
+		
+		
+		_debug_array('-----------------------------------------------------');
+		
+		// _debug_array('$get_user_device_info');
+		// $get_user_device_info = get_agent();
+		// _debug_array($get_user_device_info);
+		
+		_debug_array('agent_string');
+		echo $this->agent->agent_string();
+		_debug_array('-----------------------------------------------------');
+		
+		_debug_array('$get_referer_url');
+		$get_referer_url = get_referer_url();
+		_debug_array($get_referer_url);
+		echo $this->agent->referrer();
+		_debug_array('-----------------------------------------------------');
+		
+		_debug_array('get_browser_info()');
+		// $get_browser_info = get_browser_info();
+		// _debug_array($get_browser_info);
+		echo $this->agent->browser();
+		echo '<br>';
+		echo $this->agent->version();
+		_debug_array('-----------------------------------------------------');
+		
+
+		_debug_array('get_platform');
+		// $get_platform =  get_platform();
+		echo $this->agent->platform();
+		// _debug_array($get_platform);
+		_debug_array('-----------------------------------------------------');
+		
+		
+
+		_debug_array('mobile');
+		echo $this->agent->mobile();
+		
+		_debug_array('-----------------------------------------------------');
+		
+		// geoip_time_zone_by_country_and_region();
+
+		_debug_array('$ip_info');
+		$ip_info = ip_info();
+		_debug_array(json_encode($ip_info));
+		_debug_array($ip_info['country_code']);
+		_debug_array($ip_info);
+		// echo geoip_region_name_by_code($ip_info['country_code'],$ip_info['continent_code']);
+		
+		
+		
+		$test = 'geoip_time_zone_by_country_and_region() is ';
+		$test .= (!function_exists('geoip_time_zone_by_country_and_region'))?' not available ': 'not available';
+		
+		echo '<br><br>'.$test;
+		
+		_debug_array('-----------------------------------------------------');
+		
+		_debug_array('$user_ip');
+		$user_ip =  user_ip();
+		_debug_array($user_ip);
+		_debug_array('-----------------------------------------------------');
+		
+		
+		
+		
+		_debug_array('get_browser()');
+		// $browser = get_browser(null, true);
+		// if(!empty($browser)){
+		// 	_debug_array($browser);
+		// }
+		
+		_debug_array('-----------------------------------------------------');
+	}
+	
+	
+	public function _gen_alias(){
+		
+		$id = 1;
+		while($id < 49) {
+			$limit						= '1';//set it at session or make it at UI
+			$offset 					= '';
+			$arr 						= array();
+			$arr['limit']				= array($limit,$offset);
+			$arr['where_custom'][]		= 'url_id = "'.$id.'"';
+			$result 					= $this->shortcode_model->get_by_arr($arr);
+			$return_val['result']	= $result['result']->result_array();
+			
+			if(!empty($return_val['result'])) {
+				$data2['alias']		= gen_code($id);
+				$where['url_id']	= $id;
+				$result_update		= $this->shortcode_model->edit($data2, $where);
+			}
+			$id = $id + 1;
+		}
 	}
 }

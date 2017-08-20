@@ -31,7 +31,17 @@ class Migration_Add_scut_data extends CI_Migration {
 	{	  
 		$sql = 'DROP TABLE IF EXISTS `urls`;';
 		$this->db->query($sql);
-
+		//create table (`url_id`,`url`,`alias`,`created_on`)
+		
+		/*
+		create table links(
+			`url_id`int(11) unsigned NOT NULL PRIMARY KEY AUTO_INCREMENT,
+			`url`varchar(255) DEFAULT NULL,
+			`alias` varchar(12) DEFAULT NULL,
+			`created_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+		)
+		*/
+		
 		//access log tables;
 		$sql="CREATE TABLE urls (
 			`url_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -39,6 +49,7 @@ class Migration_Add_scut_data extends CI_Migration {
 			`url` varchar(255) DEFAULT NULL,
 			`alias` varchar(255) DEFAULT NULL,
 			`details` longtext DEFAULT NULL,
+			`created_by` varchar(100) NOT NULL DEFAULT '',
 			`created_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			PRIMARY KEY (`url_id`)
 		) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
@@ -63,11 +74,13 @@ class Migration_Add_scut_data extends CI_Migration {
 			`ip` VARCHAR(32) NOT NULL,
 			`referrer` varchar(500) NOT NULL,
 			`country` varchar(500) NOT NULL,
+			`region` TEXT NOT NULL,
 			`browser` VARCHAR(500) NOT NULL,
 			`browser_version` VARCHAR(500) NOT NULL,
 			`platform` VARCHAR(500) NOT NULL,
 			`platform_version` VARCHAR(500) NOT NULL,
 			`timezone` VARCHAR(64) NOT NULL,
+			`agent_string` varchar(500) NOT NULL,
 			`created_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			PRIMARY KEY (`clicks_id`),
 			UNIQUE KEY `person` (`ip`,`created_on`)

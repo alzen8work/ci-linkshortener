@@ -8,7 +8,6 @@ $lang['txt[protocol]']              = 'protocol';
 $lang['txt[url_id]'] 		        = 'url_id';
 $lang['txt[alias]'] 		        = 'alias';
 
-//db fields
 
 
 //app default configs
@@ -56,4 +55,17 @@ $lang['msg[404_desc]']				= '<p style="line-height:2em"> <i> %s </i> does not ex
 $lang['msg[already_exist]']		    = 'this %s is already being used.';
 
 //detail page
-$lang['header[shorten]']			= 'symplify your links';
+$lang['shorten[header]']			= 'symplify your links';
+
+
+//dashboard page
+$lang['analytics[header]'] 		       = 'analytics data for ';
+$lang['analytics[short_url]'] 		   = '->';
+$lang['analytics[created_on]'] 		   = 'created on ';
+$lang['analytics[long_url]'] 		   = 'original URL : ';
+$lang['analytics[total_clicks]'] 	   = 'total clicks ';
+$lang['analytics[timeframe]'] 	       = 'timeframe : ';
+$lang['analytics[referrers]'] 	       = 'referrers';
+$lang['analytics[browsers]'] 	       = 'browsers ';
+$lang['analytics[countries]'] 	       = 'countries ';
+$lang['analytics[platforms]'] 	       = 'platforms ';
