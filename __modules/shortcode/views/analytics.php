@@ -3,31 +3,7 @@
 	<div class="container">
 		<section class="content">
 			<div class="row">
-				<div class="col-lg-9 col-md-9 col-sm-6 col-xs-6">
-				    <div class="box box-solid box-info">
-						<div class="box-header with-border">
-							<h4>
-								<b><?php echo ucwords(lang('analytics[header]'));?></b>
-								<a href="" class="shortcode_url">
-									<span class="shortcode_display"><?php echo lang('analytics[short_url]');?></span>
-								</a>
-							</h4>
-						</div>
-						<div class="box-body">
-							<div>
-								<?php echo ucwords(lang('analytics[created_on]'));?>
-								<span class="created_on"></span>
-							</div>
-							<div>
-								<?php echo ucwords(lang('analytics[long_url]'));?>
-								<a class="long_url" href="" target="_blank">
-									<span class="long_url"></span>&nbsp;&nbsp;<i class="fa fa-external-link"></i>
-								</a>
-							</div>
-						</div>
-				    </div>
-				</div>
-				<div class="col-lg-3 col-xs-6">
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 pull-right">
 				    <!-- small box -->
 				    <div class="small-box bg-aqua">
 				        <div class="inner">
@@ -43,9 +19,34 @@
 					    </a>
 				    </div>
 				</div>
+				<div class="col-lg-9 col-md-9 col-sm-6 col-xs-12">
+				    <div class="box box-solid box-info">
+						<div class="box-header with-border">
+							<h4>
+								<b><?php echo ucwords(lang('analytics[header]'));?></b>
+								<a href="" class="shortcode_url">
+									<span class="shortcode_display"><?php echo lang('analytics[short_url]');?></span>
+								</a>
+							</h4>
+						</div>
+						<div class="box-body">
+							<span>
+								<?php echo ucwords(lang('analytics[created_on]'));?>
+								<span class="created_on"></span>
+							</span>
+							<br>
+							<span>
+								<?php echo ucwords(lang('analytics[long_url]'));?>
+								<a class="long_url" href="" target="_blank">
+									<span class="long_url"></span>&nbsp;&nbsp;<i class="fa fa-external-link"></i>
+								</a>
+							</span>
+						</div>
+				    </div>
+				</div>
 				
 				<!--BROWSER ########################################################################-->
-				<div class="col-sm-12 col-md-6">
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					<div class="box box-warning">
 						<div class="box-header with-border">
 							<h3 class="box-title">
@@ -80,7 +81,7 @@
 				</div>
 				
 				<!--REFERRERS ########################################################################-->
-				<div class="col-sm-12 col-md-6">
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					<div class="box">
 						<div class="box-header with-border">
 							<h3 class="box-title">
@@ -115,7 +116,7 @@
 				<!-- /.row -->
 				
 				<!--platform ########################################################################-->
-				<div class="col-sm-12 col-md-6">
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					<div class="box box-primary">
 						<div class="box-header with-border">
 							<h3 class="box-title">
@@ -150,7 +151,7 @@
 				</div>
 				
 				<!--COUNTRY ########################################################################-->
-				<div class="col-sm-12 col-md-6">
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					<div class="box box-success">
 						<div class="box-header with-border">
 							<h3 class="box-title">
@@ -182,15 +183,6 @@
 					</div>
 					<!-- /.box -->
 				</div>
-				<!-- /.row -->
-				
-				
-				
-				
-				
-				
-				
-				
 				<!-- /.row -->
 			</div>
 			

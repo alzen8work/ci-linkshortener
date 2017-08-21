@@ -8,17 +8,28 @@
 	color:rgba(255,255,255,0.8);
 }
 
-.box-body div{
+.box-body span
+{
 	font-weight: bold;
 }
-.box-body div span.created_on,
-.box-body div span.long_url{
-	font-size:1.25em;
+
+.box-body span span.long_url,
+.box-body span span.created_on {
+	font-size:1.05em;
 	color:rgba(0,0,0,0.5);
 	font-weight: normal;
 }
 
 .box-body div a span.long_url{
 	color:rgba(0,0,0,0.5);
+	/*font-size:0.9em;*/
 	font-weight: normal;
+}
+
+@media screen and (max-width: 767px)  {
+.fixed .content-wrapper, 
+.fixed .right-side {
+    padding-top: 50px;
+}
+	
 }

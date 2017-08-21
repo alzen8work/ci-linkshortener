@@ -12,7 +12,7 @@
 							</a>
 							<?php echo lang('app[right]'); ?> 
 						</div>
-						<div class="pull-right hidden-xs ">	
+						<div class="pull-right">	
 							<div class="dropdown dropup">
 								<button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
 									<?php echo ucwords(lang('txt[language]')); ?>&nbsp;

@@ -79,7 +79,7 @@
 <!-- LOGIN ####################################################-->
 
 <div id="modal_login" class="modal fade" role="dialog">
-	<div class="modal-dialog modal-md">
+	<div class="modal-dialog  modal-info modal-md">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
@@ -106,15 +106,20 @@
 									</div>
 									
 									<div class="form-group has-feedback">
-											<button type="submit" name="su" class="btn btn-primary btn-block">
+											<button type="submit" name="su" class="btn btn-success btn-block">
 												<?php echo ucwords(lang('btn[login]')); ?>
 											</button>
 									</div>
 									
 									<div class="form-group has-feedback">
-											<button type="submit" name="su" class="btn btn-info btn-block">
-												<?php echo ucwords(lang('btn[register]')); ?>
-											</button>
+											<a href="<?php echo ucwords(lang('url[profile]'));?>" 
+												target="_blank"
+												name="su" class="btn btn-warning btn-block">
+												<?php 
+													//echo ucwords(lang('btn[register]')); 
+													echo ucwords(lang('btn[more_info]')); 
+												?>
+											</a>
 									</div>
 								</form>
 							</div>

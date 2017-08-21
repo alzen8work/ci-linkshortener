@@ -26,7 +26,7 @@ $lang['app[right]']					= ' All rights reserved. '; //保留所有权利
 
 $lang['app[version]']				= ' <b>Version</b> 1.0.0';
 $lang['app[img]']					='https://lovely.ninja/icon.png';
-$lang['app[img_2]']					='https://capitalmedia.co.in/wp-content/uploads/2016/03/analytics-icon.png';
+$lang['app[img_2]']					='https://lovely.ninja/icon_analytic.png';
 
 //navigation links
 $lang['url[home]'] 					= base_url(); //shorturl detail page
@@ -40,6 +40,7 @@ $lang['btn[done]']					= 'done'; //完成
 $lang['btn[home]']					= 'home'; //主页按钮
 $lang['btn[login]']					= 'sign in';//登录
 $lang['btn[register]']				= 'sign up'; // 注册
+$lang['btn[more_info]']				= 'more info'; // 注册
 
 //standard notified msg
 $lang['msg[invalid]']				= 'invalid submission'; //提交无效
@@ -59,8 +60,8 @@ $lang['shorten[header]']			= 'symplify your links'; //缩短你的网址
 
 
 //login page
-$lang['login[email]']					= 'email'; //'电子邮件'; //
-$lang['login[password]']				= 'password'; //'密码'; //
+$lang['login[email]']				= 'email'; //'电子邮件'; //
+$lang['login[password]']			= 'password'; //'密码'; //
 
 //analytics page
 $lang['analytics[header]'] 		    = 'analytics data for '; //分析数据

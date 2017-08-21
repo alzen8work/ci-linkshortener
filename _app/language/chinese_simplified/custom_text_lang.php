@@ -16,8 +16,8 @@ $lang['txt[alias]'] 		        = '缩短网址'; //
 //app default configs
 $lang['app[skin]'] 	            		='skin-1'; //no-skin //skin-1 //skin-2 //skin-3 no-skin
 $lang['app[slogan]']            		='';
-$lang['app[name]'] 						='网址缩短'; //
-$lang['app[name_2]'] 					='网址缩短分析 '; //
+$lang['app[name]'] 						='网址缩短 APP'; //
+$lang['app[name_2]'] 					='网址缩短应用 '; //
 $lang['app[name_full]']	        	    ='网址缩短分析 '; //
 
 $lang['app[owner_name]']				= ' 郑 亚历山大 '; //
@@ -28,11 +28,11 @@ $lang['app[right]']						= ' 保留所有权利'; //
 
 $lang['app[version]']					= ' <b>版本</b> 1.0.0';
 $lang['app[img]']						='https://lovely.ninja/icon.png';
-$lang['app[img_2]']						='https://capitalmedia.co.in/wp-content/uploads/2016/03/analytics-icon.png';
+$lang['app[img_2]']						='https://lovely.ninja/icon_analytic.png';
 
 //navigation links
 $lang['url[home]'] 						= base_url(); //shorturl detail page
-$lang['url[profile]']					='https://lovely.ninja';
+$lang['0']				                ='https://lovely.ninja';
 $lang['url[shortcode]'] 				= base_url('shortcode');
 
 //standard button for this module
@@ -42,6 +42,7 @@ $lang['btn[done]']						= '完成'; //
 $lang['btn[home]']						= '主页按钮'; //
 $lang['btn[login]']						= '登录 ';//
 $lang['btn[register]']					= '注册 '; // 
+$lang['btn[more_info]']				    = '更多信息'; // 注册
 
 
 

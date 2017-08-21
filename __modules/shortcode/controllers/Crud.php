@@ -214,14 +214,14 @@ class Crud extends MY_Controller {
     public function analytics($got_val=array()) 
     {
 		if(empty($got_val)){ redirect(base_url()); } //redirect if no value
-    	$result = $this->_validate_analytics(); 
+    	$result = $this->_validate_analytics();
+    	$vars = $this->vars;
     	
    		// _debug_array($result); exit;
    		
     	if(empty($result['success'])) {
 			$this->custom_404();
     	} else {
-			$vars = $this->vars;
 			
     		//scripts
     		$url_arr			= remove_protocols(base_url($result['result']['alias']));
