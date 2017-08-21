@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Crud extends MY_Controller {
 
-	protected  $controller;
+	protected $controller;
 	protected $_table;
 	protected $_primary_key;
 	
@@ -155,7 +155,10 @@ class Crud extends MY_Controller {
 			$vars['jscripts'][]		= 'var shortcode="'.$data['url'].'";';
 			$vars['jscripts'][]		= 'var swal_title="'.ucwords(lang('btn[your_shorten_url]')).'";';
 			$vars['jscripts'][]		= 'var btn_done="'.ucwords(lang('btn[done]')).'";';
+			$vars['jscripts'][]		= 'var btn_analytics="'.ucfirst(lang('shorten[analytics]')).'";';
 			$vars['jscripts'][]		= 'var copy_url="blablabla";';
+			
+			
 		}
 		
 		$data['form_action'] = base_url($this->controller.'/save_doc');

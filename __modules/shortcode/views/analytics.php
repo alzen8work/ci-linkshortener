@@ -5,6 +5,7 @@
 			<div class="row">
 				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 pull-right">
 				    <!-- small box -->
+				    
 				    <div class="small-box bg-aqua">
 				        <div class="inner">
 				            <h3><span class="total_clicks"></span></h3>
@@ -24,7 +25,7 @@
 						<div class="box-header with-border">
 							<h4>
 								<b><?php echo ucwords(lang('analytics[header]'));?></b>
-								<a href="" class="shortcode_url">
+								<a href="" target="_blank" class="shortcode_url">
 									<span class="shortcode_display"><?php echo lang('analytics[short_url]');?></span>
 								</a>
 							</h4>

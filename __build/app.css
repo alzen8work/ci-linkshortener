@@ -26,10 +26,27 @@
 	font-weight: normal;
 }
 
-@media screen and (max-width: 767px)  {
-.fixed .content-wrapper, 
-.fixed .right-side {
-    padding-top: 50px;
+.cursor_btn{
+	cursor:pointer
 }
-	
+
+@media screen and (max-width: 767px)  {
+	.fixed .content-wrapper, 
+	.fixed .right-side {
+	    padding-top: 50px;
+	}
+}
+@media (min-width: 768px){
+
+.login-box.short-code-login, .register-box {
+    width: 600px;
+    margin: 7% auto;
+}
+
+}
+.login-logo a {
+	color: black;
+}
+.login-logo a b{
+	color: darkslategray;
 }

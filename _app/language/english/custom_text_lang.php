@@ -16,12 +16,16 @@ $lang['app[skin]'] 	            	='skin-1'; //no-skin //skin-1 //skin-2 //skin-3
 $lang['app[slogan]']            	='';
 $lang['app[name]'] 					='link shortener'; //网址缩短
 $lang['app[name_2]'] 				='link shortener analytics'; //网址缩短分析
+$lang['app[name_3]'] 				='<b> link shortener </b> analytics'; //网址缩短分析
+
+
 $lang['app[name_full]']	            ='Link Shortener Analytics'; //网址缩短分析
 
 $lang['app[owner_name]']			= ' Alexander Teh '; //郑 亚历山大
 $lang['app[owner_title]']			= ' Fullstack Web Developer '; //全栈网站应用程序人员
 $lang['app[owner_comp]']			= ' Alzen8work ';
-$lang['app[copy]']					=' Copyright © 2014 -'.date("Y"); ///版权所有©2014 -.date("Y");
+$lang['app[copy]']					=' Copyright © 2014 -'; ///版权所有©2014 -.date("Y");
+$lang['app[copy2]']					=' © '; ///版权所有©2014 -.date("Y");
 $lang['app[right]']					= ' All rights reserved. '; //保留所有权利
 
 $lang['app[version]']				= ' <b>Version</b> 1.0.0';
@@ -32,6 +36,7 @@ $lang['app[img_2]']					='https://lovely.ninja/icon_analytic.png';
 $lang['url[home]'] 					= base_url(); //shorturl detail page
 $lang['url[profile]']				='https://lovely.ninja';
 $lang['url[shortcode]'] 			= base_url('shortcode');
+$lang['url[login]'] 			    = base_url('login');
 
 //standard button for this module
 $lang['btn[shorten_url]']			= 'shorten URL'; //缩短网址
@@ -57,6 +62,7 @@ $lang['msg[already_exist]']		    = 'this %s is already being used.'; //这个％
 
 //detail page
 $lang['shorten[header]']			= 'symplify your links'; //缩短你的网址
+$lang['shorten[analytics]']			= 'see analytics data'; //查看分析数据
 
 
 //login page
@@ -65,6 +71,7 @@ $lang['login[password]']			= 'password'; //'密码'; //
 
 //analytics page
 $lang['analytics[header]'] 		    = 'analytics data for '; //分析数据
+
 $lang['analytics[short_url]'] 		= '->';
 $lang['analytics[created_on]'] 		= 'created on '; //创建于
 $lang['analytics[long_url]'] 		= 'original URL : '; //原始网址

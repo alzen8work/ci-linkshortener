@@ -90,9 +90,16 @@ class MY_Controller extends MX_Controller
 		$this->vars['cssfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/skins/_all-skins.min.css'; 
 		$this->vars['jsfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.js'; 
 
-		//vendor weet alert
-		$this->vars['cssfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css';
-		$this->vars['jsfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js';  
+		//vendor sweetalert1
+		// $this->vars['cssfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css';
+		// $this->vars['jsfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js';
+		
+		
+		//vendor sweetalert2
+		$this->vars['cssfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css';
+		$this->vars['jsfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.js';  
+		$this->vars['jsfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js';  
+		
 
 		//vendor fontawesome
 		$this->vars['cssfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css';
@@ -105,7 +112,7 @@ class MY_Controller extends MX_Controller
 		
 		$this->vars['cssfiles'][]	= base_url('__build/app.css');  
 		$this->vars['jsfiles'][]	= base_url('__build/common.js');
-		$this->vars['jsfiles'][]	= base_url('__build/app.js');  
+		$this->vars['jsfiles'][]	= base_url('__build/app.js?123');  
 	}
 	
 	function for_production() {

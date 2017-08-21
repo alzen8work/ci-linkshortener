@@ -3,48 +3,30 @@ console.log($(document.currentScript).attr('src')); //load url of the script
 var ajaxObject;
 var api_path = '';
 //common functions
+
+//default ajaxUsedFunction to overwrite if needed
+var postRespondDone = function (e){
+	if(typeof proj_dev !== 'undefined') console.log('||===> func :populateData()');
+	console.log(e);
+	if(typeof proj_dev !== 'undefined')	console.log('<===|| func :populateData()');
+}
+var postRespondFail = function (e){
+	if(typeof proj_dev !== 'undefined') console.log('||===> func :populateData()');
+	console.log(e);
+	if(typeof proj_dev !== 'undefined')	console.log('<===|| func :populateData()');
+}
+var postRespondComplete = function (e){
+	if(typeof proj_dev !== 'undefined') console.log('||===> func :populateData()');
+	console.log(e);
+	if(typeof proj_dev !== 'undefined')	console.log('<===|| func :populateData()');
+}
 //default ajaxUsedFunction
 var populateData = function (e){
 	if(typeof proj_dev !== 'undefined') console.log('||===> func :populateData()');
 	console.log(e);
 	if(typeof proj_dev !== 'undefined')	console.log('<===|| func :populateData()');
 }
-function ajaxGetRecord(doc_id,api_path){
-	if(typeof proj_dev !== 'undefined') console.log('||===> func :ajaxGetRecord()');
-	ajaxObject = '';
-	if(typeof doc_id !== 'undefined' && doc_id != '')
-	{
-		$.ajax({
-			url: api_path+doc_id,
-			dataType:"json",
-			// data: { id:doc_id }, 
-			// async: false,
-		})
-		.done(function(e) {
-	  	// console.log( ".done" );
-			// console.log(e.success);
 
-			if(e.success){
-				// console.log( "e.success" );
-				// console.log(e);
-				ajaxObject = e;
-				populateData(e);
-			}else{
-				// console.log( "error" );
-				// return_val = false;
-			}
-		})
-		.fail(function() {
-			console.log( "something went wrong" );
-			// return_val = false;
-		})
-		.always(function() {
-			console.log( "complete" );
-		})
-		;
-	}
-	if(typeof proj_dev !== 'undefined')	console.log('<===|| func :ajaxGetRecord()');
-}
 function placeURL(url) {
 	if(typeof proj_dev !== 'undefined') console.log('||===> func :placeURL()');
 	if(typeof url !== 'undefined')
@@ -563,4 +545,101 @@ function insertParam(key, value) {
 
     //this will reload the page, it's likely better to store this until finished
     document.location.search = kvp.join('&'); 
+}
+function hashRemove() {
+	window.location.replace("#");
+	// slice off the remaining '#' in HTML5:    
+	if (typeof window.history.replaceState == 'function') {
+	  history.replaceState({}, '', window.location.href.slice(0, -1));
+	}
+}
+function showModal(target,url) {
+	if(typeof proj_dev !== 'undefined') console.log('||===> func :showModal()');
+	$(target).modal({
+		backdrop: 'static',
+		keyboard: false
+	});
+  
+	$(target).on('shown.bs.modal', function (e) {			
+		//some function
+		console.log(url);
+    if(typeof url !== 'undefined' || url !== ''){
+	  	placeURL(url);
+    }
+	});	
+	
+	if(typeof proj_dev !== 'undefined') console.log('<===|| func :showModal()');
+}
+function hideModal(target,url) {
+	console.log('||===> func :hideModal()');
+	$(target).modal('hide');
+	$(target).on('hidden.bs.modal', function (e) {			
+		//some function
+    if(typeof url !== 'undefined' || url !== ''){
+	    placeURL(url);
+    }
+	});	
+	console.log('<===|| func :hideModal()');
+}
+function ajaxGetRecord(doc_id,api_path) {
+	if(typeof proj_dev !== 'undefined') console.log('||===> func :ajaxGetRecord()');
+	ajaxObject = '';
+	if(typeof doc_id !== 'undefined' && doc_id != '')
+	{
+		$.ajax({
+			url: api_path+doc_id,
+			dataType:"json",
+			// data: { id:doc_id }, 
+			// async: false,
+		})
+		.done(function(e) {
+	  	// console.log( ".done" );
+			// console.log(e.success);
+
+			if(e.success){
+				// console.log( "e.success" );
+				// console.log(e);
+				ajaxObject = e;
+				populateData(e);
+			}else{
+				// console.log( "error" );
+				// return_val = false;
+			}
+		})
+		.fail(function() {
+			console.log( "something went wrong" );
+			// return_val = false;
+		})
+		.always(function() {
+			console.log( "complete" );
+		})
+		;
+	}
+	if(typeof proj_dev !== 'undefined')	console.log('<===|| func :ajaxGetRecord()');
+}
+function ajaxPostRecord(serialData,custom_path) {
+	var postURL	= ( typeof custom_path == 'undefined' || custom_path === '' ) ? base_url+controller+"/save_doc" : custom_path;
+
+	$.ajax({
+		type: "POST",
+		// dataType:"json",
+		url: postURL,
+		data: serialData,  //?id = $_GET['id'] at php controller
+		// data: $('#save_doc_cust').serialize(),
+		// async: false,
+	})
+	.done(function(e) {
+		console.log( ".done" );
+		console.log(e);
+		postRespondDone(e);
+	})
+	.fail(function(e) {
+		console.log( "something went wrong" );
+		postRespondFail(e);
+	})
+	.always(function(e) {
+		console.log( "complete" );
+		postRespondComplete(e);
+	})
+	;
 }

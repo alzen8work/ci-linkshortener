@@ -1,5 +1,5 @@
 <?php echo (!empty($form_action))?form_open($form_action):''; ?>
-<div class="content-wrapper" >
+<div class="content-wrapper"  >
 	<div class="container">
 		<h2><?php echo ucwords(lang('shorten[header]')) ?></h2>	
 		

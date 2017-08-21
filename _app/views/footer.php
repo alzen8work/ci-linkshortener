@@ -7,10 +7,16 @@
 									<?php echo lang('app[copy]'); ?>
 								</strong> 
 							</span>
+							<strong> <?php echo date("Y") ?></strong> 
+							<span class="hidden-lg hidden-md hidden-sm ">
+								<?php echo lang('app[copy2]'); ?>
+							</span>
 							<a target="_blank" href="<?php echo lang('url[profile]'); ?>">
-								<?php echo lang('app[owner_comp]'); ?>.
+								<?php echo lang('app[owner_comp]'); ?>
 							</a>
-							<?php echo lang('app[right]'); ?> 
+							<span class="hidden-xs">
+								<?php echo lang('app[right]'); ?>
+							</span> 
 						</div>
 						<div class="pull-right">	
 							<div class="dropdown dropup">
