@@ -136,6 +136,4 @@ Class Common_model extends MY_Model {
 		// _debug_array($return_val['result']); exit;
 		return $return_val;
 	}
-	
-
 }

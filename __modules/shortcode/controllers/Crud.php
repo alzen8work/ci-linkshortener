@@ -15,6 +15,7 @@ class Crud extends MY_Controller {
 		$this->load->model('clicks_model');
 		$this->_table = 'urls';
 		$this->vars['jscripts'][] = 'var controller="'.$this->controller.'";';
+		
 	}
 	
 	public function test_page(){
@@ -54,17 +55,17 @@ class Crud extends MY_Controller {
 				{
 					$data['urls_id']			= $result['data']['url_id'];
 					$data['ip'] 				= user_ip();
-					$data['referrer'] 			= get_referer_data(); //$this->agent->referrer(); //or helper get_referer_url();
+					$data['referrer'] 			= get_referer_data();
 					$ip_info					= ip_info();
 					$data['country'] 			= strtoupper($ip_info['country_code']);
 					$data['region'] 			= json_encode($ip_info);
 					
 				
-					$data['browser']			= get_browser_data();			////(empty($browser))?'unknown':strtolower($browser); //or get_browser_info(); //
-					$data['browser_version']	= get_browser_version();		//strtolower($this->agent->version());
-					$data['platform'] 			= get_platform_data();		//strtolower($this->agent->platform()); // or helper get_platform();
-					$data['platform_version'] 	= get_platform_data();		//strtolower($this->agent->platform()); // or helper get_platform();
-					$data['agent_string'] 		= $this->agent->agent_string(); //or helper get_agent();
+					$data['browser']			= get_browser_data();
+					$data['browser_version']	= get_browser_version();
+					$data['platform'] 			= get_platform_data();	
+					$data['platform_version'] 	= get_platform_data();	
+					$data['agent_string'] 		= $this->agent->agent_string(); 
 					
 					
 					$saved = $this->clicks_model->add($data);
@@ -212,26 +213,24 @@ class Crud extends MY_Controller {
 	//a request to return statistic of a given shortcode
     public function analytics($got_val=array()) 
     {
-		if(empty($got_val)){ 
-			// echo 'no data'; exit; /* redirect */ 	
-			redirect(base_url());
-		} 	// _debug_array('$got_val'); _debug_array(!empty($got_val)); _debug_array('------------------------------');
+		if(empty($got_val)){ redirect(base_url()); } //redirect if no value
+    	$result = $this->_validate_analytics(); 
     	
-		// _debug_array($this->_validate_analytics()); exit;
-    	$result = $this->_validate_analytics();
-    	
-		$vars = $this->vars;
-		
+   		// _debug_array($result); exit;
+   		
     	if(empty($result['success'])) {
-    		// echo 'error 404'; exit;
 			$this->custom_404();
-    	}else {
-    		// _debug_array($result['result']);
-			$vars['jscripts'][]	= 'var shortcode="'.$result['result']['alias'].'";';
-			$vars['jscripts'][]	= 'var shortcode_url="'.base_url($result['result']['alias']).'";';
+    	} else {
+			$vars = $this->vars;
+			
+    		//scripts
     		$url_arr			= remove_protocols(base_url($result['result']['alias']));
 			$vars['jscripts'][]	= 'var shortcode_display="'.$url_arr['url'].'";';
-			$vars['jsfiles'][]	= base_url('assets/analytics.js');   
+			$vars['jscripts'][]	= 'var shortcode="'.$result['result']['alias'].'";';
+			$vars['jscripts'][]	= 'var shortcode_url="'.base_url($result['result']['alias']).'";';
+			
+			//js files
+			$vars['jsfiles'][]	= base_url('__build/analytics_basic.js');   
     	}
     	
     	if(!empty($_GET)) {
@@ -242,13 +241,11 @@ class Crud extends MY_Controller {
     		}
     	}
     	
-		
-		$vars['jscripts'][]	= 'var shortcode_display="'.$url_arr['url'].'";';
 		$data['form_action'] = base_url($this->controller.'/save_doc');
 
 		$this->load->view('header', $vars);
 		$this->load->view('nav_login', $data);
-		$this->load->view('dashboard', $data); //load the single view get_url and send any data to it
+		$this->load->view('analytics', $data); //load the single view get_url and send any data to it
 		$this->load->view('footer', $data);
     }
     
@@ -326,95 +323,51 @@ class Crud extends MY_Controller {
 		return $this->shortcode_model->validate_field_exist($arr);
 	}
 	
-	
-	
 	// unused
 	public function _user_agent_test()
 	{
-		$this->load->helper('user_agent');
-		echo '<pre>';
-		var_dump(user_agent());
+		_debug_array('USER AGENT');
+		echo get_agent();
+		// echo $this->agent->agent_string();
 		_debug_array('-----------------------------------------------------');
-		
-		echo "The time is " . date("h:i:sa");
-		echo "<br>My timezone is UTC+08:00, so the time is <br>" ;
-		$new_time = date("Y-m-d H:i:s", strtotime('+8 hours'));
-		echo $new_time;
-		
-		
+		_debug_array('REFERRER');
+		echo get_referer_data();
 		_debug_array('-----------------------------------------------------');
-		
-		// _debug_array('$get_user_device_info');
-		// $get_user_device_info = get_agent();
-		// _debug_array($get_user_device_info);
-		
-		_debug_array('agent_string');
-		echo $this->agent->agent_string();
-		_debug_array('-----------------------------------------------------');
-		
-		_debug_array('$get_referer_url');
-		$get_referer_url = get_referer_url();
-		_debug_array($get_referer_url);
-		echo $this->agent->referrer();
-		_debug_array('-----------------------------------------------------');
-		
-		_debug_array('get_browser_info()');
-		// $get_browser_info = get_browser_info();
-		// _debug_array($get_browser_info);
-		echo $this->agent->browser();
+		_debug_array('BROWSERS');
+		echo get_browser_data();
 		echo '<br>';
-		echo $this->agent->version();
+		echo get_browser_version();
 		_debug_array('-----------------------------------------------------');
-		
-
-		_debug_array('get_platform');
-		// $get_platform =  get_platform();
-		echo $this->agent->platform();
-		// _debug_array($get_platform);
+		_debug_array('PLATFORM');
+		echo get_platform_data();
 		_debug_array('-----------------------------------------------------');
-		
-		
-
 		_debug_array('mobile');
 		echo $this->agent->mobile();
-		
 		_debug_array('-----------------------------------------------------');
-		
-		// geoip_time_zone_by_country_and_region();
-
+		_debug_array('$user_ip');
+		$user_ip =  user_ip();
+		_debug_array($user_ip);
+		_debug_array('-----------------------------------------------------');
 		_debug_array('$ip_info');
 		$ip_info = ip_info();
 		_debug_array(json_encode($ip_info));
 		_debug_array($ip_info['country_code']);
 		_debug_array($ip_info);
-		// echo geoip_region_name_by_code($ip_info['country_code'],$ip_info['continent_code']);
-		
-		
-		
-		$test = 'geoip_time_zone_by_country_and_region() is ';
-		$test .= (!function_exists('geoip_time_zone_by_country_and_region'))?' not available ': 'not available';
-		
-		echo '<br><br>'.$test;
-		
 		_debug_array('-----------------------------------------------------');
-		
-		_debug_array('$user_ip');
-		$user_ip =  user_ip();
-		_debug_array($user_ip);
+		echo "The time is " . date("h:i:sa");
+		echo "<br>My timezone is UTC+08:00, so the time is <br>" ;
+		$new_time = date("Y-m-d H:i:s", strtotime('+8 hours'));
+		echo $new_time;
 		_debug_array('-----------------------------------------------------');
-		
-		
-		
-		
-		_debug_array('get_browser()');
-		// $browser = get_browser(null, true);
-		// if(!empty($browser)){
-		// 	_debug_array($browser);
-		// }
-		
+		// $this->load->helper('user_agent');
+		// echo '<pre>';
+		// var_dump(user_agent());
+		_debug_array('-----------------------------------------------------');
+		// $test = 'geoip_time_zone_by_country_and_region() is ';
+		// $test .= (!function_exists('geoip_time_zone_by_country_and_region'))?' not available ': 'not available';
+		// echo '<br><br>'.$test;
 		_debug_array('-----------------------------------------------------');
 	}
-	
 	
 	public function _gen_alias(){
 		

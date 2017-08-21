@@ -1,0 +1,24 @@
+.navbar-brand img {
+	width		 :1.3em;
+	float		 :left;
+	margin-right : 0.3em;
+}
+.box.box-solid.box-info>.box-header a.shortcode_url{
+	text-decoration: underline;
+	color:rgba(255,255,255,0.8);
+}
+
+.box-body div{
+	font-weight: bold;
+}
+.box-body div span.created_on,
+.box-body div span.long_url{
+	font-size:1.25em;
+	color:rgba(0,0,0,0.5);
+	font-weight: normal;
+}
+
+.box-body div a span.long_url{
+	color:rgba(0,0,0,0.5);
+	font-weight: normal;
+}

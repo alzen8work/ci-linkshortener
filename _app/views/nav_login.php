@@ -75,6 +75,9 @@
 		<!-- /.container-fluid -->
 	</nav>
 </header>
+
+<!-- LOGIN ####################################################-->
+
 <div id="modal_login" class="modal fade" role="dialog">
 	<div class="modal-dialog modal-md">
 		<!-- Modal content-->
@@ -92,11 +95,13 @@
 								<div class="clearfix">&nbsp;</div>
 								<form action="" method="post">
 									<div class="form-group has-feedback">
-										<input type="email" name="email" class="form-control" placeholder="Email">
+										<input type="email" name="email" class="form-control" 
+										placeholder="<?php echo ucwords(lang('login[email]')); ?>">
 										<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 									</div>
 									<div class="form-group has-feedback">
-										<input type="password" name="pw" class="form-control" placeholder="Password">
+										<input type="password" name="pw" class="form-control" 
+										placeholder="<?php echo ucwords(lang('login[password]')); ?>">
 										<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 									</div>
 									
@@ -120,6 +125,7 @@
 	</div>
 </div>
 
+<!-- OTHER ####################################################-->
 <div id="modal_other" class="modal fade" role="dialog">
 	<div class="modal-dialog modal-sm">
 

@@ -42,5 +42,5 @@
 		?>
 	</head>
 	<!-- <body class=" skin-black"> -->
-	<body class="layout-top-nav skin-black">
+	<body class="layout-top-nav skin-black fixed">
 		<div class="wrapper">
