@@ -24,6 +24,11 @@
 				    <div class="box box-solid box-info">
 						<div class="box-header with-border">
 							<h4>
+								<?php if(!empty($_SESSION['user'])): ?>
+								<a href="<?php echo base_url(); ?>" >
+									<i class="fa fa-arrow-left" aria-hidden="true"></i>
+								</a>
+								<?php endif; ?>
 								<b><?php echo ucwords(lang('analytics[header]'));?></b>
 								<a href="" target="_blank" class="shortcode_url">
 									<span class="shortcode_display"><?php echo lang('analytics[short_url]');?></span>

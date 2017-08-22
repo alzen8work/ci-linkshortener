@@ -24,8 +24,22 @@
 					<li><a href="<?php echo ucwords(lang('url[login]')) ?>" class="cursor_btn"><?php echo ucwords(lang('btn[login]')); ?></a></li>
 					<!-- /.messages-menu -->
 					<?php else: ?>
-					<li><a class="cursor_btn help_btn"><?php echo (empty($_SESSION['user']['user_name']))?'':'<b>'.$_SESSION['user']['user_name'].'</b>' ?></a></li>
-					<li><a href="<?php echo ucwords(lang('url[logout]')) ?>" class="cursor_btn"><?php echo ucwords(lang('btn[logout]')); ?></a></li>
+					<li>
+						<a class="cursor_btn help_btn">
+							<span class=""><i class="fa fa-user-circle-o"></i></span>
+							<span class="hidden-xs">
+								<?php echo (empty($_SESSION['user']['user_name']))?'':'<b>'.$_SESSION['user']['user_name'].'</b>' ?>
+							</span>
+						</a>
+					</li>
+					<li>
+						<a href="<?php echo ucwords(lang('url[logout]')) ?>" class="cursor_btn">
+							<span class=""><i class="fa fa-sign-out"></i></span>
+							<span class="hidden-xs">
+								<?php echo ucwords(lang('btn[logout]')); ?>
+							</span>
+						</a>
+					</li>
 					
 					<?php endif; ?>
 				</ul>
