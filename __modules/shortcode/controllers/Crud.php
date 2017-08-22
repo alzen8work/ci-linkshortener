@@ -126,7 +126,7 @@ class Crud extends MY_Controller {
 				// $this->shortcode_model->add($data);
 				
 				// _debug_array($gen_result); exit;
-				if(empty($return_val['success'])){
+				if(!empty($gen_result['success'])){
 					$return_val['success'] 	= $gen_result['success'];
 					$return_val['msg'] 		= ucwords(lang('msg[generated]'));    		
 					$return_val['url'] 		= $gen_result['url'];
@@ -156,16 +156,17 @@ class Crud extends MY_Controller {
 			$vars['jscripts'][]		= 'var swal_title="'.ucwords(lang('btn[your_shorten_url]')).'";';
 			$vars['jscripts'][]		= 'var btn_done="'.ucwords(lang('btn[done]')).'";';
 			$vars['jscripts'][]		= 'var btn_analytics="'.ucfirst(lang('shorten[analytics]')).'";';
-			$vars['jscripts'][]		= 'var copy_url="blablabla";';
-			
 			
 		}
 		
-		$data['form_action'] = base_url($this->controller.'/save_doc');
+		$page = (empty($_SESSION['user']))?'detail':'detail_listing';
+		
+		// $data['captcha']		= $this->common_model->generate_captcha();
+		$data['form_action']	= base_url($this->controller.'/save_doc');
 
 		$this->load->view('header', $vars);
 		$this->load->view('nav_login', $data);
-		$this->load->view('detail', $data); //load the single view get_url and send any data to it
+		$this->load->view($page, $data); //load the single view get_url and send any data to it
 		$this->load->view('footer', $data);
 	}
 

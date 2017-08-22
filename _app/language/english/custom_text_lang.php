@@ -10,6 +10,7 @@ $lang['txt[url]'] 		        	= 'url'; //网址
 $lang['txt[protocol]']              = 'protocol'; //协议
 $lang['txt[url_id]'] 		    	= 'url_id'; //网址ID
 $lang['txt[alias]'] 		        = 'alias'; //缩短网址
+$lang['txt[captcha]'] 		        = 'captcha'; //验证码
 
 //app default configs
 $lang['app[skin]'] 	            	='skin-1'; //no-skin //skin-1 //skin-2 //skin-3 no-skin
@@ -37,6 +38,8 @@ $lang['url[home]'] 					= base_url(); //shorturl detail page
 $lang['url[profile]']				='https://lovely.ninja';
 $lang['url[shortcode]'] 			= base_url('shortcode');
 $lang['url[login]'] 			    = base_url('login');
+$lang['url[logout]'] 			    = base_url('logout');
+
 
 //standard button for this module
 $lang['btn[shorten_url]']			= 'shorten URL'; //缩短网址
@@ -44,6 +47,8 @@ $lang['btn[your_shorten_url]']		= 'your short URL'; //你的短网址
 $lang['btn[done]']					= 'done'; //完成
 $lang['btn[home]']					= 'home'; //主页按钮
 $lang['btn[login]']					= 'sign in';//登录
+$lang['btn[logout]']				= 'sign out';//登录
+
 $lang['btn[register]']				= 'sign up'; // 注册
 $lang['btn[more_info]']				= 'more info'; // 注册
 
@@ -57,8 +62,10 @@ $lang['msg[generated]']				= 'record generated'; //记录生成
 //404 page
 $lang['msg[404_main]']				= '404 Page Not Found';
 $lang['msg[404_desc]']				= '<p style="line-height:2em"> <i> %s </i> does not exist.</p> <small>If you typed in or copied/pasted this URL, make sure you included all the characters, with no extra punctuation.</small>';
-
 $lang['msg[already_exist]']		    = 'this %s is already being used.'; //这个％s已经被使用了。
+
+$lang['msg[user_susp_error]'] 	    ='your account have been suspended.';
+$lang['msg[login_error]']			='invalid username or password.';
 
 //detail page
 $lang['shorten[header]']			= 'symplify your links'; //缩短你的网址

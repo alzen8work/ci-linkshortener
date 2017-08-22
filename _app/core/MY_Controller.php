@@ -80,15 +80,16 @@ class MY_Controller extends MX_Controller
 		$this->vars['jsfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js';  
 		$this->vars['jsfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js';  
 		
-
 		//vendor bootstrap
 		$this->vars['cssfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css';
 		$this->vars['jsfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js';
 		
 		//vendor theme AdminLTE
 		$this->vars['cssfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/AdminLTE.min.css';
-		$this->vars['cssfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/skins/_all-skins.min.css'; 
+		$this->vars['cssfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/skins/_all-skins.min.css';  
 		$this->vars['jsfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.js'; 
+		
+		// $this->vars['jsfiles'][]	= 'https://www.google.com/recaptcha/api.js'; 
 
 		//vendor sweetalert1
 		// $this->vars['cssfiles'][]	= 'https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css';
@@ -140,6 +141,12 @@ class MY_Controller extends MX_Controller
 				return $segment;
 			}				
 		}
+	}
+	
+
+	function validate_captcha($post_value = '', $mode = '')
+    {    	
+		return $this->common_model->validate_captcha($post_value, $mode);		
 	}
     
     function get_language($lang = 'english') {

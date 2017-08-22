@@ -50,8 +50,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 
-$route['login'] 		        = 'login/crud/index';
-$route['login/(.+)'] 		    = 'login/crud/$1';
+$route['test'] 		        = 'auth/crud/z_debug';
+$route['logout'] 		        = 'auth/crud/logout';
+$route['login'] 		        = 'auth/crud/index';
+$route['login/(.+)'] 		    = 'auth/crud/$1';
 
 $route['analytics'] 			= 'shortcode/crud/analytics';
 $route['analytics/(.+)'] 		= 'shortcode/crud/analytics/$1';

@@ -50,3 +50,15 @@
 .login-logo a b{
 	color: darkslategray;
 }
+
+.bg-white, .callout.callout-dangwhiteer, .alert-white, .white-error, .label-white, .modal-white .modal-body {
+    background-color: rgba(255,255,255,.5) !important;
+}
+
+.jumbo{
+	background-color:#366ed1;
+	padding:2em;
+}
+.jumbo div h2{
+	color:white;
+}

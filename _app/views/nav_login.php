@@ -19,9 +19,15 @@
 			<!-- Navbar Right Menu -->
 			<div class="navbar-custom-menu">
 				<ul class="nav navbar-nav">
-					<!--<li><a class="btn_login cursor_btn"><?php echo ucwords(lang('btn[login]')); ?></a></li>-->
+					<?php if(empty($_SESSION['user'])): ?>
+					<!--<li><a class="btn_login cursor_btn"><?php //echo ucwords(lang('btn[login]')); ?></a></li>-->
 					<li><a href="<?php echo ucwords(lang('url[login]')) ?>" class="cursor_btn"><?php echo ucwords(lang('btn[login]')); ?></a></li>
 					<!-- /.messages-menu -->
+					<?php else: ?>
+					<li><a class="cursor_btn help_btn"><?php echo (empty($_SESSION['user']['user_name']))?'':'<b>'.$_SESSION['user']['user_name'].'</b>' ?></a></li>
+					<li><a href="<?php echo ucwords(lang('url[logout]')) ?>" class="cursor_btn"><?php echo ucwords(lang('btn[logout]')); ?></a></li>
+					
+					<?php endif; ?>
 				</ul>
 			</div>
 			<!-- /.navbar-custom-menu -->

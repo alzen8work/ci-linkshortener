@@ -136,4 +136,109 @@ Class Common_model extends MY_Model {
 		// _debug_array($return_val['result']); exit;
 		return $return_val;
 	}
+	
+	
+	function validate_userlogin()
+	{
+		$return_val['success'] = false;
+		$error_msg	= ucwords(lang('msg[login_error]'));
+		if($_POST && ($_POST['AUTH_USER']!= '' &&  $_POST['AUTH_PW'] != ''))
+		{
+			$username 	= $this->db->escape_str($this->input->post('AUTH_USER', TRUE));
+			$password 	= $this->db->escape_str(md5($this->input->post('AUTH_PW', TRUE)));
+			
+			$result_arr	= $this->auth_model->user_login_get_data($username,$password);
+
+			if(!empty($result_arr))
+			{
+				$return_val['success'] = true;
+				if($result_arr[0]['user_active'] != 1)
+				{
+					$return_val['success'] = false;
+					$error_msg  = ucwords(lang('msg[user_susp_error]'));
+				}else{
+					$_SESSION['user']		= $result_arr[0];
+					$return_val['success']	= true;
+				}
+			}
+		}
+
+		if($return_val['success'] == false)
+		{
+			$this->form_validation->set_message('validate_userlogin', $error_msg);
+		}
+
+		return $return_val['success'];
+	}
+
+	function validate_captcha($post_value = '', $mode = '')
+	{		
+		$this->remove_expire_captcha();
+
+		$error_msg 	= ucwords(lang('msg[captcha_error]'));
+		// captcha_expired
+		$return_val	= false;
+
+		//if file expired file already being remove
+		if(!file_exists(sys_captcha_img_path.$_SESSION['captcha']['filename']))
+		{
+			$error_msg 	= ucwords(lang('msg[captcha_expired]'));
+		}
+		else
+		{			
+			if($post_value == $_SESSION['captcha']['word'])
+			{
+				$return_val = true;
+			}
+			else
+			{
+				$return_val = false;
+			}
+		}
+
+		if(($mode == '') && $return_val == false) 
+		{
+			$this->form_validation->set_message('validate_captcha', $error_msg);
+		}	
+
+		return $return_val;
+	}
+
+	function generate_captcha()
+	{
+		$this->load->helper('captcha_helper');
+		$vals = array(
+				'img_path'	 => sys_captcha_img_path, //value store at MY_Constant.php
+				'img_url'	 => sys_captcha_img_url, //value store at MY_Constant.php
+				'img_width'	 => 300,
+				'img_height' => 40,
+				'font_path'	 => sys_captcha_font_path, //value store at MY_Constant.php
+				'font_size'	 => 30,
+				'word_length' => 4,
+        		'expiration'  => sys_captcha_expiration, //value store at MY_Constant.php
+				'pool' 	     => '1234567890'
+			);
+		$captcha = create_captcha($vals);
+		$_SESSION['captcha'] = $captcha;
+		return $captcha;
+	}
+
+	function remove_expire_captcha()
+	{
+		//info https://goo.gl/3KMYs9
+		$this->load->helper('captcha_helper');
+		$vals = array(
+				'img_path'	 => sys_captcha_img_path, //value store at MY_Constant.php
+				'img_url'	 => sys_captcha_img_url, //value store at MY_Constant.php
+				'img_width'	 => 300,
+				'img_height' => 40,
+				'font_path'	 => sys_captcha_font_path, //value store at MY_Constant.php
+				'font_size'	 => 30,
+				'word_length' => 4,
+        		'expiration'  => sys_captcha_expiration, //value store at MY_Constant.php
+				'pool' 	     => '1234567890'
+			);
+		$captcha = create_captcha($vals);
+		return $captcha;
+	}
 }

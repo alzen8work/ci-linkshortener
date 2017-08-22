@@ -9,5 +9,4 @@ define('sys_captcha_img_path',		FCPATH.'temp/captcha/');
 define('sys_captcha_img_url',		base_url.'temp/captcha');
 define('sys_captcha_font_path',		FCPATH.'assets/fonts/Gabriola.ttf');
 
-
 //------------------------------------------THEME===============================================================

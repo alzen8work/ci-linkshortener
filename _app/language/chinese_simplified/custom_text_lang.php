@@ -10,6 +10,7 @@ $lang['txt[url]'] 		        	= '网址'; //
 $lang['txt[protocol]']              = '协议'; //
 $lang['txt[url_id]'] 		        = '网址ID'; //
 $lang['txt[alias]'] 		        = '缩短网址'; //
+$lang['txt[captcha]'] 		        = '验证码'; //
 
 
 
@@ -36,7 +37,8 @@ $lang['app[img_2]']						='https://lovely.ninja/icon_analytic.png';
 $lang['url[home]'] 						= base_url(); //shorturl detail page
 $lang['url[profile]']				    ='https://lovely.ninja';
 $lang['url[shortcode]'] 				= base_url('shortcode');
-$lang['url[login]'] 			    = base_url('login');
+$lang['url[login]'] 			        = base_url('login');
+$lang['url[logout]'] 			        = base_url('logout');
 
 //standard button for this module
 $lang['btn[shorten_url]']				= '缩短网址 '; //
@@ -44,6 +46,7 @@ $lang['btn[your_shorten_url]']			= '你的短网址 '; //
 $lang['btn[done]']						= '完成'; //
 $lang['btn[home]']						= '主页按钮'; //
 $lang['btn[login]']						= '登录 ';//
+$lang['btn[logout]']					= '登出 ';//
 $lang['btn[register]']					= '注册 '; // 
 $lang['btn[more_info]']				    = '更多信息'; // 注册
 
@@ -62,9 +65,10 @@ $lang['msg[generated]']					= '记录生成 '; //
 
 $lang['msg[404_main]']					= '404页未找到'; //
 $lang['msg[404_desc]']					= '<p style="line-height:2em"> <i> %s </i> 不存在。</p> <small>如果您输入或复制/粘贴此URL, 请确保包含所有字符，无需额外的标点符号。</small>';
-
-
 $lang['msg[already_exist]']				= '这个 %s 已经被使用了。'; //
+
+$lang['msg[user_susp_error]'] 	    	='帐户已被暂停。';
+$lang['msg[login_error]']			    ='用户名或密码无效。';
 
 //detail page
 $lang['shorten[header]']				= '缩短你的网址'; //
@@ -73,7 +77,6 @@ $lang['shorten[analytics]']		    	= '查看分析数据'; //
 //login page
 $lang['login[email]']					= '电子邮件'; //
 $lang['login[password]']				= '密码'; //
-
 
 //analytics page
 $lang['analytics[header]'] 				= '分析数据 '; //

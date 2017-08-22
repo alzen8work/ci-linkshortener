@@ -69,6 +69,19 @@ function event_btn(){
 	if($('.form_login_close').length > 0) {
 		$('.form_login_close').click(function(){ LoginModal(0); });
 	}
+	if($('.help_btn').length > 0) {
+		$('.help_btn').click(function(){ 
+			swal({
+			  title: 'Link Shortener',
+			  text: 'Copyright © 2014 -	2017 Alzen8work All rights reserved.',
+			  imageUrl: 'https://lovely.ninja/icon_analytic.png',
+			  imageWidth: 200,
+			  imageHeight: 200,
+			  animation: false
+			})
+			
+		});
+	}
 	
 	if($('.change_lang').length > 0) {
 		$('.change_lang').click(function(e) {
